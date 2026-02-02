@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,4 +10,6 @@ abstract class ThirdPartyModule {
       SharedPreferences.getInstance();
 
   FlutterSecureStorage get flutterSecureStorage => FlutterSecureStorage();
+
+  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
 }
