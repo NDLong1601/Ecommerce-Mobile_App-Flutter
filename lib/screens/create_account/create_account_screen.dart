@@ -45,6 +45,8 @@ class _CreateAccountScreenContentState
   }
 
   void _handleCreateAccount(BuildContext context) {
+    final firstName = _firstNameController.text.trim();
+    final lastName = _lastNameController.text.trim();
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -58,6 +60,8 @@ class _CreateAccountScreenContentState
     context.read<CreateAccountCubit>().createAccountWithEmail(
       email: email,
       password: password,
+      firstName: firstName,
+      lastName: lastName,
     );
   }
 

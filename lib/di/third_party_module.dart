@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -12,4 +13,6 @@ abstract class ThirdPartyModule {
   FlutterSecureStorage get flutterSecureStorage => FlutterSecureStorage();
 
   FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+
+  FirebaseFirestore get firebaseFirestore => FirebaseFirestore.instance;
 }

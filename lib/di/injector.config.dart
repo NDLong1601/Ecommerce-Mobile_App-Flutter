@@ -9,11 +9,13 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:ecommerce_mobile_app/core/logging/app_logger.dart' as _i701;
 import 'package:ecommerce_mobile_app/core/logging/console_app_logger.dart'
     as _i314;
 import 'package:ecommerce_mobile_app/cubit/create_account/create_account_cubit.dart'
     as _i483;
+import 'package:ecommerce_mobile_app/cubit/profile/profile_cubit.dart' as _i739;
 import 'package:ecommerce_mobile_app/cubit/sign_in/sign_in_cubit.dart' as _i980;
 import 'package:ecommerce_mobile_app/di/third_party_module.dart' as _i498;
 import 'package:ecommerce_mobile_app/services/remote/firebase_service.dart'
@@ -41,15 +43,24 @@ extension GetItInjectableX on _i174.GetIt {
       () => thirdPartyModule.flutterSecureStorage,
     );
     gh.factory<_i59.FirebaseAuth>(() => thirdPartyModule.firebaseAuth);
+    gh.factory<_i974.FirebaseFirestore>(
+      () => thirdPartyModule.firebaseFirestore,
+    );
     gh.lazySingleton<_i701.AppLogger>(() => _i314.ConsoleAppLogger());
     gh.lazySingleton<_i527.FirebaseService>(
-      () => _i527.FirebaseService(gh<_i59.FirebaseAuth>()),
+      () => _i527.FirebaseService(
+        gh<_i59.FirebaseAuth>(),
+        gh<_i974.FirebaseFirestore>(),
+      ),
     );
     gh.factory<_i980.SignInCubit>(
       () => _i980.SignInCubit(gh<_i83.FirebaseService>()),
     );
     gh.factory<_i483.CreateAccountCubit>(
       () => _i483.CreateAccountCubit(gh<_i83.FirebaseService>()),
+    );
+    gh.factory<_i739.ProfileCubit>(
+      () => _i739.ProfileCubit(gh<_i83.FirebaseService>()),
     );
     return this;
   }

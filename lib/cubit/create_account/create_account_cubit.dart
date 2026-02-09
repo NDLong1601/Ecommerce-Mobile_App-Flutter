@@ -12,11 +12,18 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
   Future<void> createAccountWithEmail({
     required String email,
     required String password,
+    required String firstName,
+    required String lastName,
   }) async {
     emit(state.copyWith(isLoading: true, isSuccess: false, errorMessage: ''));
 
     try {
-      await _firebaseService.signUpWithEmail(email: email, password: password);
+      await _firebaseService.signUpWithEmail(
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      );
       emit(state.copyWith(isLoading: false, isSuccess: true));
     } catch (e) {
       emit(

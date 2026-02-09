@@ -60,7 +60,7 @@ class _SignInScreenContentState extends State<_SignInScreenContent> {
     return BlocConsumer<SignInCubit, SignInState>(
       listener: (context, state) {
         if (state.isSuccess) {
-          context.go(RouteName.homeRoute);
+          context.go(RouteName.mainRoute);
         } else if (state.errorMessage.isNotEmpty) {
           ScaffoldMessenger.of(
             context,
