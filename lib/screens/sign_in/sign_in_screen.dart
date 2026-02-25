@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +8,7 @@ import 'package:ecommerce_mobile_app/shared/shared.dart';
 import 'package:ecommerce_mobile_app/router/route_name.dart';
 import 'package:ecommerce_mobile_app/cubit/cubit.dart';
 import 'package:ecommerce_mobile_app/di/injector.dart';
+import 'package:ecommerce_mobile_app/services/services.dart';
 import 'package:go_router/go_router.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -30,11 +33,48 @@ class _SignInScreenContent extends StatefulWidget {
 class _SignInScreenContentState extends State<_SignInScreenContent> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final RemoteConfigService _remoteConfigService = getIt<RemoteConfigService>();
+  StreamSubscription<Map<String, dynamic>>? _configSubscription;
+  bool _showContinueButton = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _showContinueButton = _remoteConfigService.getEnableContinueLoginButton();
+    _listenToConfigChanges();
+  }
+
+  void _listenToConfigChanges() {
+    _configSubscription = _remoteConfigService.configChanges.listen(
+      (updatedValues) {
+        if (updatedValues.containsKey('enableContinueLoginButton')) {
+          setState(() {
+            _showContinueButton =
+                updatedValues['enableContinueLoginButton'] as bool? ?? true;
+          });
+          _showConfigUpdateMessage(updatedValues);
+        }
+      },
+    );
+  }
+
+  void _showConfigUpdateMessage(Map<String, dynamic> updatedValues) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Remote Config updated: ${updatedValues.keys.join(", ")}',
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _configSubscription?.cancel();
     super.dispose();
   }
 
@@ -92,13 +132,14 @@ class _SignInScreenContentState extends State<_SignInScreenContent> {
                     keyboardType: TextInputType.visiblePassword,
                   ),
                   SizedBox(height: 16.h),
-                  AppButton(
-                    text: 'Continue',
-                    onPressed: state.isLoading
-                        ? null
-                        : () => _handleSignIn(context),
-                    isLoading: state.isLoading,
-                  ),
+                  if (_showContinueButton)
+                    AppButton(
+                      text: 'Continue',
+                      onPressed: state.isLoading
+                          ? null
+                          : () => _handleSignIn(context),
+                      isLoading: state.isLoading,
+                    ),
                   SizedBox(height: 24.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

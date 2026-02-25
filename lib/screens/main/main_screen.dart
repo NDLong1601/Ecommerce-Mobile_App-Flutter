@@ -2,6 +2,7 @@ import 'package:ecommerce_mobile_app/screens/home/home_screen.dart';
 import 'package:ecommerce_mobile_app/screens/notification/notification_screen.dart';
 import 'package:ecommerce_mobile_app/screens/orders/orders_screen.dart';
 import 'package:ecommerce_mobile_app/screens/profile/profile_screen.dart';
+import 'package:ecommerce_mobile_app/screens/test/notification_screen_test.dart';
 import 'package:ecommerce_mobile_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = const [
     HomeScreen(),
-    NotificationScreen(),
+    NotificationScreenTest(),
     OrdersScreen(),
     ProfileScreen(),
   ];

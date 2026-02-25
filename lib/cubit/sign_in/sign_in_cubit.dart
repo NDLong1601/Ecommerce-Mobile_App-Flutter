@@ -1,6 +1,6 @@
+import 'package:ecommerce_mobile_app/services/remote/remote.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:ecommerce_mobile_app/services/remote/remote.dart';
 import 'sign_in_state.dart';
 
 @injectable
