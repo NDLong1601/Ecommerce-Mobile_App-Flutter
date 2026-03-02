@@ -8,18 +8,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   try {
     // Initialize Firebase
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
     // Configure dependencies
     await configureDependencies();
-    
+
     // Initialize notification service
     final notificationService = getIt<NotificationService>();
     await notificationService.initialize();
-    
+
     // Initialize remote config service
     try {
       final remoteConfigService = getIt<RemoteConfigService>();
@@ -30,7 +32,7 @@ void main() async {
   } catch (e) {
     debugPrint('App initialization failed: $e');
   }
-  
+
   runApp(const MyApp());
 }
 

@@ -13,6 +13,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:ecommerce_mobile_app/core/logging/app_logger.dart' as _i701;
 import 'package:ecommerce_mobile_app/core/logging/console_app_logger.dart'
     as _i314;
+import 'package:ecommerce_mobile_app/cubit/counter/counter_cubit.dart' as _i218;
 import 'package:ecommerce_mobile_app/cubit/create_account/create_account_cubit.dart'
     as _i483;
 import 'package:ecommerce_mobile_app/cubit/profile/profile_cubit.dart' as _i739;
@@ -66,6 +67,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => thirdPartyModule.flutterLocalNotificationsPlugin,
     );
     gh.factory<_i974.Logger>(() => thirdPartyModule.logger);
+    gh.factory<_i218.CounterCubit>(() => _i218.CounterCubit());
     gh.singleton<_i180.RemoteConfigService>(
       () => _i180.RemoteConfigService(
         gh<_i627.FirebaseRemoteConfig>(),
